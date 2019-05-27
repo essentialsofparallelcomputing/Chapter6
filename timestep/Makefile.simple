@@ -1,0 +1,4 @@
+CFLAGS=-g -O3 -fstrict-aliasing -ftree-vectorize -fopenmp-simd -march=native \
+	          -mprefer-vector-width=512 -fopt-info-vec-optimized
+  
+stream_triad: main.o timestep.o timer.o

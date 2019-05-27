@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.0)
-project (stream_triad)
+project (timestep)
 
 set (CMAKE_C_STANDARD 99)
 
@@ -9,7 +9,7 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fvectorize\
        -march=native -Rpass-analysis=loop-vectorize")
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
-   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -ftree-vectorize\
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -ftree-vectorize -fopenmp-simd\
        -march=native -mprefer-vector-width=512 -fopt-info-vec-optimized")
        # needed for some versions of the GCC compiler to generate AVX512 instructions
        #-mprefer-vector-width=512
@@ -27,9 +27,11 @@ elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -h vector3")
 endif()
 
-# Adds build target of stream_triad with source code files
-add_executable(stream_triad stream_triad.c timer.c timer.h)
+# Adds build target of timestep with source code files
+add_executable(timestep main.c timestep.c timer.c timer.h)
+
+target_link_libraries(timestep m)
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
-                  Makefile cmake_install.cmake stream_triad.dSYM ipo_out.optrpt)
+                  Makefile cmake_install.cmake timestep.dSYM ipo_out.optrpt)
