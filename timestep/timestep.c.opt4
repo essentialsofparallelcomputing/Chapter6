@@ -1,6 +1,5 @@
 #include <math.h>
 #include "timestep.h"
-#define NCELLS 10000000
 #define REAL_CELL 1
 
 double timestep(int ncells, double g, double sigma, int* restrict celltype,
@@ -8,7 +7,7 @@ double timestep(int ncells, double g, double sigma, int* restrict celltype,
                 double* restrict dx, double* restrict dy){
    double mymindt = 1.0e20;
 #pragma omp simd reduction(min:mymindt)
-   for (int ic=0; ic<NCELLS ; ic++) {
+   for (int ic=0; ic<ncells ; ic++) {
       if (celltype[ic] == REAL_CELL) {
          double wavespeed = sqrt(g*H[ic]);
          double xspeed = (fabs(U[ic])+wavespeed)/dx[ic];
