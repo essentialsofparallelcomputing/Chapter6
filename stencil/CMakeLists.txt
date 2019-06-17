@@ -27,7 +27,7 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    endif (VECTOR_TYPE STREQUAL "none")
    if (VECTOR_TYPE STREQUAL "full_vectorize")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -ftree-vectorize\
-          -mprefer-vector-width=512 -fopt-info-vec-optimized")
+          -mprefer-vector-width=512 -fopenmp-simd -fopt-info-vec-optimized")
           # needed for some versions of the GCC compiler to generate AVX512 instructions
           #-mprefer-vector-width=512
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
@@ -36,7 +36,7 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -no-vec")
    endif (VECTOR_TYPE STREQUAL "none")
    if (VECTOR_TYPE STREQUAL "full_vectorize")
-      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ansi-alias -xHost\
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ansi-alias -xHost -qopenmp-simd\
           -qopt-report=5 -qopt-report-phase=vec,loop")
       if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -qopt-zmm-usage=high")
@@ -53,7 +53,9 @@ endif()
 find_package(likwid)
 
 # Adds build target of stencil with source code files
-add_executable(stencil stencil.c timer.c timer.h malloc2d.c malloc2d.h)
+add_executable(stencil stencil.c timer.c timer.h malloc2D.c malloc2D.h)
+target_include_directories(stencil PUBLIC ${LIKWID_INCLUDE_DIRS})
+target_link_libraries(stencil PUBLIC ${LIKWID_LIBRARIES})
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
