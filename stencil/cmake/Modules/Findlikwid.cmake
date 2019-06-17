@@ -28,7 +28,7 @@ IF (LIKWID_FOUND)
     set(LIKWID_LIBRARIES ${LIKWID_LIBRARY})
 
     # set HAVE_LIKWID for config.h
-    add_definitions(-DHAVE_LIKWID)
+    add_definitions(-DHAVE_LIKWID -DLIKWID_PERFMON)
 
     IF (NOT LIKWID_FIND_QUIETLY)
         MESSAGE(STATUS "Found LIKWID include: ${LIKWID_INCLUDE_DIR}")

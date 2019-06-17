@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
    int imax=2002, jmax = 2002;
 
    double** xtmp;
-   double** x = malloc2D(jmax, imax);
-   double** xnew = malloc2D(jmax, imax);
+   double** restrict x = malloc2D(jmax, imax);
+   double** restrict xnew = malloc2D(jmax, imax);
    int *flush = (int *)malloc(jmax*imax*sizeof(int)*10);
 
    for (int j = 0; j < jmax; j++){
