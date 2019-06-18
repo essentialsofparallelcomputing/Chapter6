@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
    int *flush = (int *)malloc(jmax*imax*sizeof(int)*10);
 
    for (int j = 0; j < jmax; j++){
+#pragma omp simd
       for (int i = 0; i < imax; i++){
          xnew[j][i] = 0.0;
          x[j][i] = 5.0;
@@ -54,9 +55,7 @@ int main(int argc, char *argv[])
       cpu_timer_start(&tstart_cpu);
       LIKWID_MARKER_START("STENCIL");
       for (int j = 1; j < jmax-1; j++){
-#ifdef SIMD
 #pragma omp simd
-#endif
          for (int i = 1; i < imax-1; i++){
             xnew[j][i] = ( x[j][i] + x[j][i-1] + x[j][i+1] + x[j-1][i] + x[j+1][i] )/5.0;
          }
