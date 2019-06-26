@@ -3,6 +3,7 @@ CFLAGS_QUIET=-std=c11 -g -O3 -fstrict-aliasing -ftree-vectorize -march=native -m
 
 CPPFLAGS=-Ivectorclass
 CXXFLAGS=-g -O3 -fstrict-aliasing -ftree-vectorize -march=native -mtune=native -fopt-info-vec-optimized -fopt-info-vec-missed -fopt-info-loop-optimized -fopt-info-loop-missed
+LDFLAGS=-lm
 
 default: globalsums assembler
 
@@ -14,7 +15,8 @@ globalsums.o: globalsums.c
 assembler: serial_sum.asm kahan_sum.asm kahan_intel_vector.asm kahan_gcc_vector.asm kahan_agner_vector.asm
 
 %.asm : %.o
-	objdump -d -x86-asm-syntax=intel -no-show-raw-insn $< > $@
+	#objdump -d -x86-asm-syntax=intel -no-show-raw-insn $< > $@
+	objdump -d -M=intel --no-show-raw-insn $< > $@
 
 clean:
 	rm -f globalsums *.o *.asm
