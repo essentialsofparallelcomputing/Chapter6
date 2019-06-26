@@ -1,6 +1,4 @@
-#include "globalsums.h"
-
-double do_sum(double *var, long ncells)
+double do_sum(double* restrict var, long ncells)
 {
    // Serial sum
    double sum = 0.0;

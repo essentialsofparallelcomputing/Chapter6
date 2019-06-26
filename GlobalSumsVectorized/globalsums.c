@@ -3,7 +3,10 @@
 #include <sys/time.h>
 #include <math.h>
 
-#include "globalsums.h"
+double do_sum(double *var, long ncells);
+double do_kahan_sum(double *var, long ncells);
+double do_kahan_sum_v(double *var, long ncells);
+double do_kahan_sum_gcc_v(double *var, long ncells);
 
 void cpu_timer_start(struct timeval *tstart_cpu);
 double cpu_timer_stop(struct timeval tstart_cpu);

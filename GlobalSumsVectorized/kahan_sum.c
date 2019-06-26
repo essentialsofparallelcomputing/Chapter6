@@ -1,6 +1,4 @@
-#include "globalsums.h"
-
-double do_kahan_sum(double *var, long ncells)
+double do_kahan_sum(double* restrict var, long ncells)
 {
    struct esum_type{
       double sum;

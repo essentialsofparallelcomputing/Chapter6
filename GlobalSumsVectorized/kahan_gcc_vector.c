@@ -1,8 +1,6 @@
-#include "globalsums.h"
-
 static double sum[4] __attribute__ ((aligned (64)));
 
-double do_kahan_sum_gcc_v(double *var, long ncells)
+double do_kahan_sum_gcc_v(double* restrict var, long ncells)
 {
    typedef double vec4d __attribute__ ((vector_size(4 * sizeof(double))));
 
