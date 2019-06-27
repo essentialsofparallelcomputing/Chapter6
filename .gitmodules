@@ -1,0 +1,3 @@
+[submodule "GlobalSums"]
+	path = GlobalSums
+	url = https://github.com/lanl/GlobalSums.git
