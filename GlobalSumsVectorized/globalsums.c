@@ -79,6 +79,7 @@ int main(int argc, char *argv[])
       printf(" 4 wide vectors serial sum\n");
 //******************************************************
 
+#ifndef HAVE_AVX512
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_sum(energy, ncells);
@@ -88,6 +89,7 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   Serial sum (OpenMP SIMD pragma vectorization)\n");
+#endif
 
 //******************************************************
 
@@ -167,6 +169,21 @@ int main(int argc, char *argv[])
       printf(" 8 wide vector serial sum\n");
 //******************************************************
 
+#ifdef HAVE_AVX512
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_sum(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   Serial sum (OpenMP SIMD pragma vectorization)\n");
+#endif
+
+//******************************************************
+
+#ifdef HAVE_AVX512
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_serial_sum_intel_v8(energy, ncells);
@@ -176,6 +193,7 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   8 wide Intel vector intrinsic Serial sum\n");
+#endif
 
 //******************************************************
 
@@ -205,6 +223,7 @@ int main(int argc, char *argv[])
       printf(" 8 wide vector Kahan sum\n");
 //******************************************************
 
+#ifdef HAVE_AVX512
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_kahan_sum_intel_v8(energy, ncells);
@@ -214,6 +233,7 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   8 wide Intel Vector intrinsics Kahan sum\n");
+#endif
 
 //******************************************************
 

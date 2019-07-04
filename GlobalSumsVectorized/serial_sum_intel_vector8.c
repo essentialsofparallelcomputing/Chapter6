@@ -1,3 +1,4 @@
+#ifdef HAVE_AVX512
 #include <x86intrin.h>
 
 static double sum[8] __attribute__ ((aligned (64)));
@@ -18,3 +19,4 @@ double do_serial_sum_intel_v8(double* restrict var, long ncells)
    }
    return(final_sum);
 }
+#endif

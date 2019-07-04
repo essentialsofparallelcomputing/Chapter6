@@ -1,3 +1,4 @@
+#ifdef HAVE_AVX512
 #include <x86intrin.h>
 
 static double sum[8] __attribute__ ((aligned (64)));
@@ -38,3 +39,4 @@ double do_kahan_sum_intel_v8(double* restrict var, long ncells)
    double final_sum = local.sum + local.correction;
    return(final_sum);
 }
+#endif
