@@ -3,11 +3,19 @@
 #include <sys/time.h>
 #include <math.h>
 
+double do_sum_novec(double *var, long ncells);
 double do_sum(double *var, long ncells);
 double do_kahan_sum(double *var, long ncells);
+double do_serial_sum_v(double *var, long ncells);
+double do_serial_sum_v8(double *var, long ncells);
+double do_serial_sum_fog_v(double *var, long ncells);
+double do_serial_sum_fog_v8(double *var, long ncells);
 double do_kahan_sum_v(double *var, long ncells);
 double do_kahan_sum_gcc_v(double *var, long ncells);
 double do_kahan_sum_agner_v(double *var, long ncells);
+double do_kahan_sum_v8(double *var, long ncells);
+double do_kahan_sum_gcc_v8(double *var, long ncells);
+double do_kahan_sum_agner_v8(double *var, long ncells);
 
 void cpu_timer_start(struct timeval *tstart_cpu);
 double cpu_timer_stop(struct timeval tstart_cpu);
@@ -18,7 +26,7 @@ typedef unsigned int uint;
 
 int main(int argc, char *argv[])
 {
-  for (int pow_of_two = 4; pow_of_two < 31; pow_of_two++){
+  for (int pow_of_two = 8; pow_of_two < 31; pow_of_two++){
       long ncells = (long)pow((double)2,(double)pow_of_two);
       long ncellsdiv2 = ncells/2;
 
@@ -45,7 +53,7 @@ int main(int argc, char *argv[])
 
       cpu_timer_start(&cpu_timer);
 
-      test_sum = do_sum(energy, ncells);
+      test_sum = do_sum_novec(energy, ncells);
 
       cpu_time = cpu_timer_stop(cpu_timer);
    
@@ -63,8 +71,48 @@ int main(int argc, char *argv[])
    
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
-      printf("   Serial sum with double double kahan sum accumulator\n");
+      printf("   Kahan sum with double double accumulator\n");
 
+//******************************************************
+      printf(" 4 wide vectors serial sum\n");
+//******************************************************
+
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_sum(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   Serial sum (OpenMP SIMD pragma vectorization)\n");
+
+//******************************************************
+
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_serial_sum_v(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   Intel vector intrinsics Serial sum\n");
+
+//******************************************************
+
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_serial_sum_fog_v(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   Fog intrinsic vector Serial sum\n");
+
+//******************************************************
+      printf(" 4 wide vectors Kahan sum\n");
 //******************************************************
 
       cpu_timer_start(&cpu_timer);
@@ -99,7 +147,71 @@ int main(int argc, char *argv[])
    
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
-      printf("   Agner C++ vector class sum with double double kahan sum accumulator\n");
+      printf("   Fog C++ vector class sum with double double kahan sum accumulator\n");
+
+//******************************************************
+      printf(" 8 wide vector serial sum\n");
+//******************************************************
+
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_serial_sum_v8(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   8 wide Intel vector intrinsic Serial sum\n");
+
+//******************************************************
+
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_serial_sum_fog_v8(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   8 wide Fog intrinsic vector Serial sum\n");
+
+//******************************************************
+      printf(" 8 wide vector Kahan sum\n");
+//******************************************************
+
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_kahan_sum_v8(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   8 wide Vectorized sum with double double kahan sum accumulator\n");
+
+//******************************************************
+
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_kahan_sum_gcc_v8(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   8 wide GCC vector extensions sum with double double kahan sum accumulator\n");
+
+//******************************************************
+
+      cpu_timer_start(&cpu_timer);
+
+      test_sum = do_kahan_sum_agner_v8(energy, ncells);
+
+      cpu_time = cpu_timer_stop(cpu_timer);
+   
+      printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
+             accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
+      printf("   8 wide Fog C++ vector class sum with double double kahan sum accumulator\n");
 
 //******************************************************
       free(energy);
