@@ -2,7 +2,7 @@
 
 static double sum[8] __attribute__ ((aligned (64)));
 
-double do_kahan_sum_v8(double* restrict var, long ncells)
+double do_kahan_sum_intel_v8(double* restrict var, long ncells)
 {
    double const zero[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
    __m512d local_sum = _mm512_load_pd(zero);

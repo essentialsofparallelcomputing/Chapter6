@@ -1,17 +1,16 @@
+#include <x86intrin.h>
+
 static double sum[4] __attribute__ ((aligned (64)));
 
-double do_serial_sum_v(double* restrict var, long ncells)
+double do_serial_sum_intel_v(double* restrict var, long ncells)
 {
-   typedef double vec4d __attribute__ ((vector_size(4 * sizeof(double))));
-
-   vec4d local_sum = {0.0};
-   vec4d var_v;
+   __m256d local_sum = {0.0};
 
    for (long i = 0; i < ncells; i+=4) {
-       var_v = *(vec4d *)&var[i];
+       __m256d var_v = _mm256_load_pd(&var[i]);
        local_sum += var_v;
    }
-   *(vec4d *)sum = local_sum;
+   _mm256_store_pd(sum, local_sum);
 
    double final_sum = 0.0;
    for (long i = 0; i < 4; i++) {

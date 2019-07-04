@@ -9,8 +9,9 @@ LDFLAGS=-lm
 default: globalsums #assembler
 
 globalsums: globalsums.o serial_sum.o kahan_sum.o kahan_intel_vector.o kahan_gcc_vector.o kahan_fog_vector.o \
-	        kahan_intel_vector8.o kahan_gcc_vector8.o kahan_fog_vector8.o serial_sum_vector.o serial_sum_vector8.o \
-			serial_sum_fog_vector.o serial_sum_fog_vector8.o serial_sum_novec.o
+	        kahan_intel_vector8.o kahan_gcc_vector8.o kahan_fog_vector8.o serial_sum_intel_vector.o \
+			serial_sum_gcc_vector.o serial_sum_intel_vector8.o serial_sum_gcc_vector8.o serial_sum_fog_vector.o serial_sum_fog_vector8.o \
+	        serial_sum_novec.o
 
 globalsums.o: globalsums.c
 	$(CC) $(CPPFLAGS) $(CFLAGS_QUIET) -c $<
@@ -19,7 +20,7 @@ serial_sum_novec.o: serial_sum_novec.c
 	$(CC) $(CPPFLAGS) $(CFLAGS_NOVEC) -c $<
 
 assembler: serial_sum.asm kahan_sum.asm kahan_intel_vector.asm kahan_gcc_vector.asm kahan_fog_vector.asm \
-	       kahan_intel_vector8.asm kahan_gcc_vector8.asm kahan_fog_vector8.asm serial_sum_vector.asm serial_sum_vector8.asm \
+	       kahan_intel_vector8.asm kahan_gcc_vector8.asm kahan_fog_vector8.asm serial_sum_intel_vector.asm serial_sum_intel_vector8.asm \
 		   serial_sum_fog_vector.asm serial_sum_fog_vector8.asm
 
 %.asm : %.o

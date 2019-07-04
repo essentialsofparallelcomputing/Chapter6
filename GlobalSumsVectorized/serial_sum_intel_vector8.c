@@ -1,6 +1,6 @@
 static double sum[8] __attribute__ ((aligned (64)));
 
-double do_serial_sum_v8(double* restrict var, long ncells)
+double do_serial_sum_intel_v8(double* restrict var, long ncells)
 {
    typedef double vec8d __attribute__ ((vector_size(8 * sizeof(double))));
 

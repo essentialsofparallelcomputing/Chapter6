@@ -2,7 +2,7 @@
 
 static double sum[4] __attribute__ ((aligned (64)));
 
-double do_kahan_sum_v(double* restrict var, long ncells)
+double do_kahan_sum_intel_v(double* restrict var, long ncells)
 {
    double const zero = 0.0;
    __m256d local_sum = _mm256_broadcast_sd((double const*) &zero);
