@@ -10,9 +10,9 @@ double do_kahan_sum_agner_v(double* var, long ncells)
 {
    Vec4d local_sum(0.0);
    Vec4d local_correction(0.0);
-   Vec4d var_v;
 
    for (long i = 0; i < ncells; i+=4) {
+       Vec4d var_v;
        var_v.load(var+i);
        Vec4d corrected_next_term = var_v + local_correction;
        Vec4d new_sum = local_sum + local_correction;

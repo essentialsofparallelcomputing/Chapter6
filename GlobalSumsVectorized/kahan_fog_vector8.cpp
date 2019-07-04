@@ -10,9 +10,9 @@ double do_kahan_sum_agner_v8(double* var, long ncells)
 {
    Vec8d local_sum(0.0);
    Vec8d local_correction(0.0);
-   Vec8d var_v;
 
    for (long i = 0; i < ncells; i+=8) {
+       Vec8d var_v;
        var_v.load(var+i);
        Vec8d corrected_next_term = var_v + local_correction;
        Vec8d new_sum = local_sum + local_correction;

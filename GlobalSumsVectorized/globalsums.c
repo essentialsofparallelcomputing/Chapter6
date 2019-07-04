@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
    
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
-      printf("   Fog intrinsic vector Serial sum\n");
+      printf("   Fog C++ vector class Serial sum\n");
 
 //******************************************************
       printf(" 4 wide vectors Kahan sum\n");
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
    
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
-      printf("   8 wide Fog intrinsic vector Serial sum\n");
+      printf("   8 wide Fog C++ vector class Serial sum\n");
 
 //******************************************************
       printf(" 8 wide vector Kahan sum\n");

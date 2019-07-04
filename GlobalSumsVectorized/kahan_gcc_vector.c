@@ -6,10 +6,9 @@ double do_kahan_sum_gcc_v(double* restrict var, long ncells)
 
    vec4d local_sum = {0.0};
    vec4d local_correction = {0.0};
-   vec4d var_v;
 
    for (long i = 0; i < ncells; i+=4) {
-       var_v = *(vec4d *)&var[i];
+       vec4d var_v = *(vec4d *)&var[i];
        vec4d corrected_next_term = var_v + local_correction;
        vec4d new_sum = local_sum + local_correction;
        local_correction = corrected_next_term - (new_sum - local_sum);
