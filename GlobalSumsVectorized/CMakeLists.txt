@@ -84,10 +84,10 @@ endif()
 try_compile(HAVE_AVX512 "${CMAKE_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/test.c")
 
 if(HAVE_AVX512)
-    message("Have AVX512 hardware")
+    message("-- Detecting AVX512 hardware -- found")
     add_definitions(-DHAVE_AVX512)
 else()
-    message("Don't Have AVX512 hardware")
+    message("-- Detecting AVX512 hardware -- not present")
 endif()
 
 # Adds build target of globalsums with source code files
