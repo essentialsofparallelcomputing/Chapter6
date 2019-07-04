@@ -1,4 +1,4 @@
-CFLAGS=-std=c11 -g -O3 -fstrict-aliasing -ftree-vectorize -fopenmp-simd -march=native -mtune=native -fopt-info-vec-optimized -fopt-info-vec-missed -fopt-info-loop-optimized -fopt-info-loop-missed
+CFLAGS=-std=c11 -g -O3 -fstrict-aliasing -ftree-vectorize -fopenmp-simd -march=native -mtune=native -mprefer-vector-width=512 -fopt-info-vec-optimized -fopt-info-vec-missed -fopt-info-loop-optimized -fopt-info-loop-missed
 CFLAGS_QUIET=-std=c11 -g -O3 -fstrict-aliasing -ftree-vectorize -march=native -mtune=native -mprefer-vector-width=512
 CFLAGS_NOVEC=-std=c11 -g -O3 -fstrict-aliasing -fno-tree-vectorize -march=native -mtune=native
 
