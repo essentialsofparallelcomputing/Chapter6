@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
    
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
-      printf("   Serial sum (OpenMP SIMD pragma vectorization)\n");
+      printf("   Serial sum (OpenMP SIMD pragma)\n");
 #endif
 
 //******************************************************
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
    
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
-      printf("   Serial sum (OpenMP SIMD pragma vectorization)\n");
+      printf("   Serial sum (OpenMP SIMD pragma)\n");
 #endif
 
 //******************************************************
