@@ -19,8 +19,8 @@ double do_kahan_sum_intel_v8(double *var, long ncells);
 double do_kahan_sum_gcc_v8(double *var, long ncells);
 double do_kahan_sum_agner_v8(double *var, long ncells);
 
-void cpu_timer_start(struct timeval *tstart_cpu);
-double cpu_timer_stop(struct timeval tstart_cpu);
+void cpu_timer_start(struct timespec *tstart_cpu);
+double cpu_timer_stop(struct timespec tstart_cpu);
 
 #define ORDERS_OF_MAGNITUDE 1.0e9;
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
       }
 
       double test_sum;
-      struct timeval cpu_timer;
+      struct timespec cpu_timer;
       double cpu_time;
 
 //******************************************************
@@ -266,17 +266,16 @@ int main(int argc, char *argv[])
    }
 }
 
-void cpu_timer_start(struct timeval *tstart_cpu){
-   gettimeofday(tstart_cpu, NULL);
+void cpu_timer_start(struct timespec *tstart_cpu){
+   clock_gettime(CLOCK_MONOTONIC, tstart_cpu);
 }
 
-double cpu_timer_stop(struct timeval tstart_cpu){
-   double result;
-   struct timeval tstop_cpu, tresult;
-
-   gettimeofday(&tstop_cpu, NULL);
+double cpu_timer_stop(struct timespec tstart_cpu){
+   struct timespec tstop_cpu, tresult;
+   clock_gettime(CLOCK_MONOTONIC, &tstop_cpu);
    tresult.tv_sec = tstop_cpu.tv_sec - tstart_cpu.tv_sec;
-   tresult.tv_usec = tstop_cpu.tv_usec - tstart_cpu.tv_usec;
-   result = (double)tresult.tv_sec + (double)tresult.tv_usec*1.0e-6;
+   tresult.tv_nsec = tstop_cpu.tv_nsec - tstart_cpu.tv_nsec;
+   double result = (double)tresult.tv_sec + (double)tresult.tv_nsec*1.0e-9;
+
    return(result);
 }
