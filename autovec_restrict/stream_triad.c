@@ -13,7 +13,7 @@ void stream_triad(double* restrict a, double* restrict b, double* restrict c, do
 }
 
 int main(int argc, char *argv[]){
-   struct timeval tstart;
+   struct timespec tstart;
    double scalar = 3.0, time_sum = 0.0;
    for (int i=0; i<STREAM_ARRAY_SIZE; i++) {
       a[i] = 1.0;

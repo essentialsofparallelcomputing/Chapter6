@@ -28,7 +28,7 @@ elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
 endif()
 
 # Adds build target of mass_sum with source code files
-add_executable(mass_sum main.c mass_sum.c timer.c timer.h)
+add_executable(mass_sum main.c mass_sum.c)
 
 target_link_libraries(mass_sum m)
 

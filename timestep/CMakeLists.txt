@@ -28,7 +28,7 @@ elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
 endif()
 
 # Adds build target of timestep with source code files
-add_executable(timestep main.c timestep.c timer.c timer.h)
+add_executable(timestep main.c timestep.c)
 
 target_link_libraries(timestep m)
 
