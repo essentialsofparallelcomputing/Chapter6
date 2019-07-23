@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/time.h>
+#include <time.h>
 #include <math.h>
 
 double do_sum_novec(double *var, long ncells);
