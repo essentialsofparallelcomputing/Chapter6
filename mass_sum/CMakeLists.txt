@@ -10,9 +10,10 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
        -march=native -ffast-math -Rpass-analysis=loop-vectorize")
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -ftree-vectorize -fopenmp-simd\
-       -march=native -mprefer-vector-width=512 -ffast-math -fopt-info-vec-all -fopt-info-loop-all")
-       # needed for some versions of the GCC compiler to generate AVX512 instructions
-       #-mprefer-vector-width=512
+       -march=native -ffast-math -fopt-info-vec-all -fopt-info-loop-all")
+   if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mprefer-vector-width=512")
+   endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ansi-alias -xHost\
        -qopt-report=5 -qopt-report-phase=vec,loop")

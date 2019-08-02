@@ -20,6 +20,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O3")
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fvectorize\
        -march=native -mtune=native -Rpass-analysis=loop-vectorize")
+
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native")
    if (VECTOR_TYPE STREQUAL "none")
@@ -27,8 +28,12 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    endif (VECTOR_TYPE STREQUAL "none")
    if (VECTOR_TYPE STREQUAL "full_vectorize")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -ftree-vectorize\
-          -mprefer-vector-width=512 -fopenmp-simd -fopt-info-vec-optimized -fopt-info-vec-missed -fopt-info-loop-optimized -fopt-info-loop-missed")
+          -fopenmp-simd -fopt-info-vec-optimized -fopt-info-vec-missed -fopt-info-loop-optimized -fopt-info-loop-missed")
+      if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
+         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mprefer-vector-width=512")
+      endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
+
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    if (VECTOR_TYPE STREQUAL "none")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -no-vec")
@@ -40,12 +45,16 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -qopt-zmm-usage=high")
       endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Qvec-report:2")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "XL")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -qsimd=auto")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -h vector3")
+
 endif()
 
 # Set vectorization flags for a few compilers
@@ -53,6 +62,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O3")
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstrict-aliasing -fvectorize\
        -march=native -mtune=native -Rpass-analysis=loop-vectorize")
+
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mtune=native")
    if (VECTOR_TYPE STREQUAL "none")
@@ -62,6 +72,7 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMAX_VECTOR_SIZE=512 -fstrict-aliasing -ftree-vectorize\
           -mprefer-vector-width=512 -fopenmp-simd -fopt-info-vec-optimized -fopt-info-vec-missed -fopt-info-loop-optimized -fopt-info-loop-missed")
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
+
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    if (VECTOR_TYPE STREQUAL "none")
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -no-vec")
@@ -73,12 +84,16 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -qopt-zmm-usage=high")
       endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Qvec-report:2")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "XL")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -qsimd=auto")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -h vector3")
+
 endif()
 
 try_compile(HAVE_AVX512 "${CMAKE_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/test.c")
@@ -100,4 +115,4 @@ target_include_directories(globalsums PRIVATE vectorclass)
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
-                  Makefile cmake_install.cmake ipo_out.optrpt)
+                  Makefile cmake_install.cmake globalsums.dSYM ipo_out.optrpt)

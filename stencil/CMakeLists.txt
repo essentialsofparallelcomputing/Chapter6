@@ -20,6 +20,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O3")
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fvectorize\
        -march=native -mtune=native -Rpass-analysis=loop-vectorize")
+
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native")
    if (VECTOR_TYPE STREQUAL "none")
@@ -27,10 +28,12 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    endif (VECTOR_TYPE STREQUAL "none")
    if (VECTOR_TYPE STREQUAL "full_vectorize")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -ftree-vectorize\
-          -mprefer-vector-width=512 -fopenmp-simd -fopt-info-vec-optimized")
-          # needed for some versions of the GCC compiler to generate AVX512 instructions
-          #-mprefer-vector-width=512
+          -fopenmp-simd -fopt-info-vec-optimized")
+      if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
+         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mprefer-vector-width=512")
+      endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
+
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    if (VECTOR_TYPE STREQUAL "none")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -no-vec")
@@ -42,12 +45,16 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -qopt-zmm-usage=high")
       endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Qvec-report:2")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Qvec-report:2")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "XL")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -qsimd=auto")
+
 elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -h vector3")
+
 endif()
 
 find_package(likwid)
