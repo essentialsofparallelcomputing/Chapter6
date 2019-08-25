@@ -36,8 +36,20 @@ endif()
 
 # Adds build target of timestep with source code files
 add_executable(timestep main.c timestep.c)
-
 target_link_libraries(timestep m)
+
+add_executable(timestep_opt main.c timestep_opt.c)
+target_link_libraries(timestep_opt m)
+
+add_executable(timestep_opt1 main.c timestep_opt1.c)
+target_link_libraries(timestep_opt1 m)
+
+add_executable(timestep_opt2 main.c timestep_opt2.c)
+target_link_libraries(timestep_opt2 m)
+
+add_executable(timestep_opt3 main.c timestep_opt3.c)
+target_link_libraries(timestep_opt3 m)
+
 
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
