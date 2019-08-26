@@ -63,5 +63,15 @@ Exploring compiler hints
       Run the program ./mass_sum
 
    stencil (Book: listing 6.5)
+      Build with cmake, make
+      Check the vectorization report
+         For GCC, the version with the OpenMP SIMD pragma vectorizes the loop and generates multiple
+            versions for the other two
+         For Intel, the version with the OpenMP SIMD pragma and the restrict modifier both vectorize and
+            generates multiple versions if neither are there.
+
 Intrinsics
    GlobalSumsVectorized (Book: listings 6.6 through 6.8)
+      Build with cmake, make
+      Run with ./globalsums
+      Output shows the performance of the different test versions of the global sum
