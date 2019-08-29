@@ -59,11 +59,11 @@ endif()
 
 # Set vectorization flags for a few compilers
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O3")
-if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # using Clang
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstrict-aliasing -fvectorize\
        -march=native -mtune=native -Rpass-analysis=loop-vectorize")
 
-elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -mtune=native")
    if (VECTOR_TYPE STREQUAL "none")
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-tree-vectorize")
@@ -73,25 +73,25 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
           -mprefer-vector-width=512 -fopenmp-simd -fopt-info-vec-optimized -fopt-info-vec-missed -fopt-info-loop-optimized -fopt-info-loop-missed")
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
 
-elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    if (VECTOR_TYPE STREQUAL "none")
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -no-vec")
    endif (VECTOR_TYPE STREQUAL "none")
    if (VECTOR_TYPE STREQUAL "full_vectorize")
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ansi-alias -xHost -qopenmp-simd\
           -qopt-report=5 -qopt-report-phase=vec,loop")
-      if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
+      if ("${CMAKE_CXX_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -qopt-zmm-usage=high")
-      endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
+      endif ("${CMAKE_CXX_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
    endif (VECTOR_TYPE STREQUAL "full_vectorize")
 
-elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Qvec-report:2")
 
-elseif (CMAKE_C_COMPILER_ID MATCHES "XL")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "XL")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -qsimd=auto")
 
-elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Cray")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -h vector3")
 
 endif()

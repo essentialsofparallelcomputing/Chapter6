@@ -11,7 +11,7 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
 
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -ftree-vectorize\
-       -march=native -fopt-info-vec-optimized")
+       -march=native -mtune=native -fopt-info-vec-optimized")
    if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mprefer-vector-width=512")
    endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
@@ -24,7 +24,7 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "17.0.4")
 
 elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Qvec-report:2")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Qvec-report:2")
 
 elseif (CMAKE_C_COMPILER_ID MATCHES "XL")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -qsimd=auto")
