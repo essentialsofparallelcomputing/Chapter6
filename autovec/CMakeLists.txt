@@ -7,11 +7,12 @@ set (CMAKE_C_STANDARD 99)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O3")
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -fvectorize\
-       -march=native -Rpass-analysis=loop-vectorize")
+       -march=native -mtune=native -Rpass-analysis=loop-vectorize")
 
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstrict-aliasing -ftree-vectorize\
        -march=native -mtune=native -fopt-info-vec-optimized")
+
    if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mprefer-vector-width=512")
    endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
