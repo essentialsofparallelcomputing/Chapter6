@@ -64,6 +64,14 @@ add_executable(stencil stencil.c timer.c timer.h malloc2D.c malloc2D.h)
 target_include_directories(stencil PUBLIC ${LIKWID_INCLUDE_DIRS})
 target_link_libraries(stencil PUBLIC ${LIKWID_LIBRARIES})
 
+add_executable(stencil_opt1 stencil_opt1.c timer.c timer.h malloc2D.c malloc2D.h)
+target_include_directories(stencil_opt1 PUBLIC ${LIKWID_INCLUDE_DIRS})
+target_link_libraries(stencil_opt1 PUBLIC ${LIKWID_LIBRARIES})
+
+add_executable(stencil_opt2 stencil_opt2.c timer.c timer.h malloc2D.c malloc2D.h)
+target_include_directories(stencil_opt2 PUBLIC ${LIKWID_INCLUDE_DIRS})
+target_link_libraries(stencil_opt2 PUBLIC ${LIKWID_LIBRARIES})
+
 # Cleanup
 add_custom_target(distclean COMMAND rm -rf CMakeCache.txt CMakeFiles
                   Makefile cmake_install.cmake stencil.dSYM ipo_out.optrpt)
