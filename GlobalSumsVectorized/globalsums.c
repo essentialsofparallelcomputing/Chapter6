@@ -93,6 +93,7 @@ int main(int argc, char *argv[])
 
 //******************************************************
 
+#ifdef HAVE_X86_64_INTRINSICS_XXX
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_serial_sum_intel_v(energy, ncells);
@@ -102,9 +103,11 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   Intel vector intrinsics Serial sum\n");
+#endif
 
 //******************************************************
 
+#ifdef HAVE_GCC_VECTOR_EXTENSIONS
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_serial_sum_gcc_v(energy, ncells);
@@ -114,9 +117,11 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   GCC vector intrinsics Serial sum\n");
+#endif
 
 //******************************************************
 
+#ifdef HAVE_FOG_VECTOR_CLASS
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_serial_sum_fog_v(energy, ncells);
@@ -126,11 +131,13 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   Fog C++ vector class Serial sum\n");
+#endif
 
 //******************************************************
       printf(" 4 wide vectors Kahan sum\n");
 //******************************************************
 
+#ifdef HAVE_X86_64_INTRINSICS_XXX
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_kahan_sum_intel_v(energy, ncells);
@@ -140,9 +147,11 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   Intel Vector intrinsics Kahan sum\n");
+#endif
 
 //******************************************************
 
+#ifdef HAVE_GCC_VECTOR_EXTENSIONS
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_kahan_sum_gcc_v(energy, ncells);
@@ -152,9 +161,11 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   GCC vector extensions Kahan sum\n");
+#endif
 
 //******************************************************
 
+#ifdef HAVE_FOG_VECTOR_CLASS
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_kahan_sum_agner_v(energy, ncells);
@@ -164,6 +175,7 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   Fog C++ vector class Kahan sum\n");
+#endif
 
 //******************************************************
       printf(" 8 wide vector serial sum\n");
@@ -183,6 +195,7 @@ int main(int argc, char *argv[])
 
 //******************************************************
 
+#ifdef HAVE_X86_64_INTRINSICS_XXX
 #ifdef HAVE_AVX512
       cpu_timer_start(&cpu_timer);
 
@@ -194,9 +207,11 @@ int main(int argc, char *argv[])
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   8 wide Intel vector intrinsic Serial sum\n");
 #endif
+#endif
 
 //******************************************************
 
+#ifdef HAVE_GCC_VECTOR_EXTENSIONS
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_serial_sum_gcc_v8(energy, ncells);
@@ -206,9 +221,11 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   8 wide GCC vector intrinsic Serial sum\n");
+#endif
 
 //******************************************************
 
+#ifdef HAVE_FOG_VECTOR_CLASS
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_serial_sum_fog_v8(energy, ncells);
@@ -218,11 +235,13 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   8 wide Fog C++ vector class Serial sum\n");
+#endif
 
 //******************************************************
       printf(" 8 wide vector Kahan sum\n");
 //******************************************************
 
+#ifdef HAVE_X86_64_INTRINSICS_XXX
 #ifdef HAVE_AVX512
       cpu_timer_start(&cpu_timer);
 
@@ -234,9 +253,11 @@ int main(int argc, char *argv[])
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   8 wide Intel Vector intrinsics Kahan sum\n");
 #endif
+#endif
 
 //******************************************************
 
+#ifdef HAVE_GCC_VECTOR_EXTENSIONS
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_kahan_sum_gcc_v8(energy, ncells);
@@ -246,9 +267,11 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   8 wide GCC vector extensions Kahan sum\n");
+#endif
 
 //******************************************************
 
+#ifdef HAVE_FOG_VECTOR_CLASS
       cpu_timer_start(&cpu_timer);
 
       test_sum = do_kahan_sum_agner_v8(energy, ncells);
@@ -258,6 +281,7 @@ int main(int argc, char *argv[])
       printf("  accurate sum %-17.16lg sum %-17.16lg diff %10.4lg relative diff %10.4lg runtime %lf",
              accurate_sum,test_sum,(test_sum-accurate_sum),((test_sum-accurate_sum)/accurate_sum), cpu_time);
       printf("   8 wide Fog C++ vector class Kahan sum\n");
+#endif
 
 //******************************************************
       free(energy);
