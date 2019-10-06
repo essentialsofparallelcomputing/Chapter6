@@ -94,7 +94,7 @@ if(CMAKE_C_COMPILER_LOADED)
         set(VECTOR_C_OPTS "${VECTOR_C_OPTS} -h vector=3")
   
         set(VECTOR_NOVEC_C_OPT "${VECTOR_NOVEC_C_OPT} -h vector=0")
-       set(VECTOR_C_VERBOSE "${VECTOR_C_VERBOSE} -h msgs -h negmsgs -h list=a")
+        set(VECTOR_C_VERBOSE "${VECTOR_C_VERBOSE} -h msgs -h negmsgs -h list=a")
 
     endif()
 
