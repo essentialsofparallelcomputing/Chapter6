@@ -44,10 +44,14 @@ if(CMAKE_C_COMPILER_LOADED)
 
         set(VECTOR_OPENMP_SIMD_C_FLAGS "${VECTOR_OPENMP_SIMD_C_FLAGS} -fopenmp-simd")
         set(VECTOR_C_OPTS "${VECTOR_C_OPTS} -ftree-vectorize")
+        set(VECTOR_C_FPOPTS "${VECTOR_C_FPOPTS} -fno-trapping-math -fno-math-errno")
         if ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
             if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
                 set(VECTOR_C_OPTS "${VECTOR_C_OPTS} -mprefer-vector-width=512")
             endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
+            if ("${CMAKE_C_COMPILER_VERSION}" VERSION_LESS "9.0.0")
+                message(STATUS "Use a GCC compiler version 9.0.0 or greater to get effective vectorization")
+            endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_LESS "9.0.0")
         endif ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
 
         set(VECTOR_NOVEC_C_OPT "${VECTOR_NOVEC_C_OPT} -fno-tree-vectorize")
@@ -100,7 +104,7 @@ if(CMAKE_C_COMPILER_LOADED)
 
     set(VECTOR_BASE_C_FLAGS "${VECTOR_ALIASING_C_FLAGS} ${VECTOR_ARCH_C_FLAGS} ${VECTOR_FPMODEL_C_FLAGS}")
     set(VECTOR_NOVEC_C_FLAGS "${VECTOR_BASE_C_FLAGS} ${VECTOR_NOVEC_C_OPT}")
-    set(VECTOR_C_FLAGS "${VECTOR_BASE_C_FLAGS} ${VECTOR_C_OPTS} ${VECTOR_OPENMP_SIMD_C_FLAGS}")
+    set(VECTOR_C_FLAGS "${VECTOR_BASE_C_FLAGS} ${VECTOR_C_OPTS} ${VECTOR_C_FPOPTS} ${VECTOR_OPENMP_SIMD_C_FLAGS}")
 
     mark_as_advanced(VECTOR_C_FLAGS
                      VECTOR_NOVEC_C_FLAGS
@@ -109,9 +113,10 @@ if(CMAKE_C_COMPILER_LOADED)
                      VECTOR_ARCH_C_FLAGS
                      VECTOR_FPMODEL_C_FLAGS
                      VECTOR_NOVEC_C_OPT
-                     VECTOR_VEC_C_OPTS)
+                     VECTOR_VEC_C_OPTS
+                     VECTOR_VEC_C_FPOPTS)
 
-    message(STATUS  "Setting Vector C flags to -- ${VECTOR_C_OPTS}")
+    message(STATUS  "Setting Vector C flags to -- ${VECTOR_C_FLAGS}")
     message(STATUS  "Setting Vector C No-Vector flags to -- ${VECTOR_NOVEC_C_FLAGS}")
     message(STATUS  "Setting Vector C Verbose flags to -- ${VECTOR_C_VERBOSE}")
 
@@ -140,10 +145,14 @@ if(CMAKE_CXX_COMPILER_LOADED)
 
         set(VECTOR_OPENMP_SIMD_CXX_FLAGS "${VECTOR_OPENMP_SIMD_CXX_FLAGS} -fopenmp-simd")
         set(VECTOR_CXX_OPTS "${VECTOR_CXX_OPTS} -ftree-vectorize")
+        set(VECTOR_CXX_FPOPTS "${VECTOR_CXX_FPOPTS} -fno-trapping-math -fno-math-errno")
         if ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
             if ("${CMAKE_CXX_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
                 set(VECTOR_CXX_OPTS "${VECTOR_CXX_OPTS} -mprefer-vector-width=512")
             endif ("${CMAKE_CXX_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
+            if ("${CMAKE_CXX_COMPILER_VERSION}" VERSION_LESS "9.0.0")
+                message(STATUS "Use a GCC compiler version 9.0.0 or greater to get effective vectorization")
+            endif ("${CMAKE_CXX_COMPILER_VERSION}" VERSION_LESS "9.0.0")
         endif ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
 
         set(VECTOR_NOVEC_CXX_OPT "${VECTOR_NOVEC_CXX_OPT} -fno-tree-vectorize")
@@ -196,7 +205,7 @@ if(CMAKE_CXX_COMPILER_LOADED)
 
     set(VECTOR_BASE_CXX_FLAGS "${VECTOR_ALIASING_CXX_FLAGS} ${VECTOR_ARCH_CXX_FLAGS} ${VECTOR_FPMODEL_CXX_FLAGS}")
     set(VECTOR_NOVEC_CXX_FLAGS "${VECTOR_BASE_CXX_FLAGS} ${VECTOR_NOVEC_CXX_OPT}")
-    set(VECTOR_CXX_FLAGS "${VECTOR_BASE_CXX_FLAGS} ${VECTOR_CXX_OPTS} ${VECTOR_OPENMP_SIMD_CXX_FLAGS}")
+    set(VECTOR_CXX_FLAGS "${VECTOR_BASE_CXX_FLAGS} ${VECTOR_CXX_OPTS} ${VECTOR_CXX_FPOPTS} ${VECTOR_OPENMP_SIMD_CXX_FLAGS}")
 
     mark_as_advanced(VECTOR_CXX_FLAGS
                      VECTOR_NOVEC_CXX_FLAGS
@@ -205,9 +214,10 @@ if(CMAKE_CXX_COMPILER_LOADED)
                      VECTOR_ARCH_CXX_FLAGS
                      VECTOR_FPMODEL_CXX_FLAGS
                      VECTOR_NOVEC_CXX_OPT
-                     VECTOR_VEC_CXX_OPTS)
+                     VECTOR_VEC_CXX_OPTS
+                     VECTOR_VEC_CXX_FPOPTS)
 
-   message(STATUS  "Setting Vector CXX flags to -- ${VECTOR_CXX_OPTS}")
+   message(STATUS  "Setting Vector CXX flags to -- ${VECTOR_CXX_FLAGS}")
    message(STATUS  "Setting Vector CXX No-Vector flags to -- ${VECTOR_NOVEC_CXX_FLAGS}")
    message(STATUS  "Setting Vector CXX Verbose flags to -- ${VECTOR_CXX_VERBOSE}")
 
@@ -236,10 +246,14 @@ if(CMAKE_Fortran_COMPILER_LOADED)
 
         set(VECTOR_OPENMP_SIMD_Fortran_FLAGS "${VECTOR_OPENMP_SIMD_Fortran_FLAGS} -fopenmp-simd")
         set(VECTOR_Fortran_OPTS "${VECTOR_Fortran_OPTS} -ftree-vectorize")
+        set(VECTOR_Fortran_FPOPTS "${VECTOR_Fortran_FPOPTS} -fno-trapping-math -fno-math-errno")
         if ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
             if ("${CMAKE_Fortran_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
                 set(VECTOR_Fortran_OPTS "${VECTOR_Fortran_OPTS} -mprefer-vector-width=512")
             endif ("${CMAKE_Fortran_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
+            if ("${CMAKE_Fortran_COMPILER_VERSION}" VERSION_LESS "9.0.0")
+                message(STATUS "Use a GCC compiler version 9.0.0 or greater to get effective vectorization")
+            endif ("${CMAKE_Fortran_COMPILER_VERSION}" VERSION_LESS "9.0.0")
         endif ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
 
         set(VECTOR_NOVEC_Fortran_OPT "${VECTOR_NOVEC_Fortran_OPT} -fno-tree-vectorize")
@@ -293,7 +307,7 @@ if(CMAKE_Fortran_COMPILER_LOADED)
 
     set(VECTOR_BASE_Fortran_FLAGS "${VECTOR_ALIASING_Fortran_FLAGS} ${VECTOR_ARCH_Fortran_FLAGS} ${VECTOR_FPMODEL_Fortran_FLAGS}")
     set(VECTOR_NOVEC_Fortran_FLAGS "${VECTOR_BASE_Fortran_FLAGS} ${VECTOR_NOVEC_Fortran_OPT}")
-    set(VECTOR_Fortran_FLAGS "${VECTOR_BASE_Fortran_FLAGS} ${VECTOR_Fortran_OPTS} ${VECTOR_OPENMP_SIMD_Fortran_FLAGS}")
+    set(VECTOR_Fortran_FLAGS "${VECTOR_BASE_Fortran_FLAGS} ${VECTOR_Fortran_OPTS} ${VECTOR_Fortran_FPOPTS} ${VECTOR_OPENMP_SIMD_Fortran_FLAGS}")
 
     mark_as_advanced(VECTOR_Fortran_FLAGS
                      VECTOR_NOVEC_Fortran_FLAGS
@@ -302,9 +316,10 @@ if(CMAKE_Fortran_COMPILER_LOADED)
                      VECTOR_ARCH_Fortran_FLAGS
                      VECTOR_FPMODEL_Fortran_FLAGS
                      VECTOR_NOVEC_Fortran_OPT
-                     VECTOR_VEC_Fortran_OPTS)
+                     VECTOR_VEC_Fortran_OPTS
+                     VECTOR_VEC_Fortran_FPOPTS)
 
-    message(STATUS  "Setting Vector Fortran flags to -- ${VECTOR_Fortran_OPTS}")
+    message(STATUS  "Setting Vector Fortran flags to -- ${VECTOR_Fortran_FLAGS}")
     message(STATUS  "Setting Vector Fortran No-Vector flags to -- ${VECTOR_NOVEC_Fortran_FLAGS}")
     message(STATUS  "Setting Vector Fortran Verbose flags to -- ${VECTOR_Fortran_VERBOSE}")
 
