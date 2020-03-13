@@ -1,3 +1,6 @@
 [submodule "GlobalSums"]
 	path = GlobalSums
 	url = https://github.com/lanl/GlobalSums.git
+[submodule "GlobalSumsVectorized/vectorclass"]
+	path = GlobalSumsVectorized/vectorclass
+	url = https://github.com/vectorclass/version1.git
