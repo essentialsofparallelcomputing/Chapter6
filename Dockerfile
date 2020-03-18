@@ -35,7 +35,8 @@ RUN apt-get update && \
 
 # Needed libraries for Intel Advisor graphics user interface
 RUN apt-get update && \
-    apt-get install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 && \
+    apt-get install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 libxtst6 \
+            libasound2 libatk-bridge2.0-0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
