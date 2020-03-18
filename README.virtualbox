@@ -1,6 +1,6 @@
 # These are instructions to setup a Ubuntu virtual machine for the examples in
 # this chapter. The first part of the instructions must be done manually. The
-# last half can be done by exiting this file as a script as instructed.
+# last half can be done by executing this file as a script as instructed.
 
 # Download VirtualBox and install
 
@@ -57,28 +57,57 @@
 
 # select dots at bottom left and start up a terminal
 
-# sudo apt install build-essential dkms git -y
+# sudo apt-get update
+# sudo apt-get install build-essential dkms git -y
 # Now go up to devices and insert virtualbox-guest-additions-iso
 
 # Make virtualbox window active and select devices from window menus at top of screen
 #     Shared Clipboard --> bidirectional
 #     Drag and Drop --> bidirectional
-#     Install guest additions (under devices pull-down
+#     Install guest additions (under devices pull-down)
 #     Remove optical disk -- from desktop, right click and eject or from devices-->optical disk-->remove disk from virtual drive
 #     reboot and test copy paste
 # Copy on Mac is command-C and paste in Ubuntu is shift-ctrl-v
 
 # Reboot to get cut and paste and screen size fixed
 
-# git clone https://github.com/essentialsofparallelcomputing/Chapter13.git
+sudo apt-get update && \
+     apt-get install -y cmake git vim gcc g++ wget software-properties-common && \
+     apt-get clean && \
+     rm -rf /var/lib/apt/lists/*
 
-# Run this README as a script to install rest of packages
-#    Chapter13/README.virtualbox
+# Installing latest GCC compiler (version 9) for best vectorization
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update && \
+     apt-get install -y gcc-9 g++-9 && \
+     apt-get clean && \
+     rm -rf /var/lib/apt/lists/*
 
-# ====
-sudo apt-get update
-sudo apt-get install -y bash cmake git vim gcc python3
+sudo update-alternatives --install /usr/bin/gcc  gcc  /usr/bin/gcc-9 90 \
+                         --slave   /usr/bin/g++  g++  /usr/bin/g++-9 \
+                         --slave   /usr/bin/gcov gcov /usr/bin/gcov-9
 
-If Software updater prompts, install updated software --> wait ....
+# Installing Intel compiler since it gives the best vectorization across compiler vendors
+pushd /tmp
+wget -q https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+sudo rm -f GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+popd
+
+sudo echo "deb https://apt.repos.intel.com/oneapi all main" >> /etc/apt/sources.list.d/oneAPI.list
+sudo echo "deb [trusted=yes arch=amd64] https://repositories.intel.com/graphics/ubuntu bionic main" >> /etc/apt/sources.list.d/intel-graphics.list
+sudo apt-get update && \
+     apt-get install -y \
+             intel-hpckit-getting-started \
+             intel-oneapi-common-vars \
+             intel-oneapi-common-licensing \
+             intel-oneapi-dev-utilities \
+             intel-oneapi-icc \
+             intel-oneapi-ifort \
+             intel-oneapi-advisor && \
+     apt-get clean && \
+     rm -rf /var/lib/apt/lists/*
+
+# If Software updater prompts, install updated software --> wait ....
 
 git clone https://github.com/essentialsofparallelcomputing/Chapter6.git
