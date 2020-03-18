@@ -41,6 +41,6 @@
 
 # Now run the GUI with
 
-# advpxe_gui
+# advixe_gui
 
 # For Intel Advisor, add --cap-add=SYS_ADMIN --cap-add=SYS_PTRACE to the docker run command.

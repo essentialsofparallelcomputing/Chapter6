@@ -1,7 +1,8 @@
 FROM ubuntu:18.04 AS builder
 WORKDIR /project
 RUN apt-get update && \
-    apt-get install -y cmake git vim gcc g++ wget software-properties-common && \
+    apt-get install -y cmake git vim gcc g++ wget software-properties-common \
+            libgtk2.0-0 libxxf86vm1 libsm6 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
