@@ -1,8 +1,7 @@
 FROM ubuntu:18.04 AS builder
 WORKDIR /project
 RUN apt-get update && \
-    apt-get install -y cmake git vim gcc g++ wget software-properties-common \
-            libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 && \
+    apt-get install -y cmake git vim gcc g++ wget software-properties-common && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -31,6 +30,12 @@ RUN apt-get update && \
              intel-oneapi-icc \
              intel-oneapi-ifort \
              intel-oneapi-advisor && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Needed libraries for Intel Advisor graphics user interface
+RUN apt-get update && \
+    apt-get install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
