@@ -6,6 +6,7 @@
 
 # Download Ubuntu desktop install and save on local disk [ubuntu-18.04.2-desktop-amd64.iso]
 # Download VBoxGuestAdditions.iso
+# On Mac already at /Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso
 
 # Setup new machine
 
@@ -82,13 +83,14 @@ sudo rm -rf /var/lib/apt/lists/*
 # Installing latest GCC compiler (version 9) for best vectorization
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update && \
-sudo apt-get install -y gcc-9 g++-9 && \
+sudo apt-get install -y gcc-9 g++-9 gfortran && \
 sudo apt-get clean && \
 sudo rm -rf /var/lib/apt/lists/*
 
-sudo update-alternatives --install /usr/bin/gcc  gcc  /usr/bin/gcc-9 90 \
-                         --slave   /usr/bin/g++  g++  /usr/bin/g++-9 \
-                         --slave   /usr/bin/gcov gcov /usr/bin/gcov-9
+sudo update-alternatives --install /usr/bin/gcc       gcc       /usr/bin/gcc-9 90 \
+                         --slave   /usr/bin/g++       g++       /usr/bin/g++-9 \
+                         --slave   /usr/bin/gfortran  gfortran  /usr/bin/gfortran-9 \
+                         --slave   /usr/bin/gcov      gcov      /usr/bin/gcov-9
 
 # Installing Intel compiler since it gives the best vectorization across compiler vendors
 pushd /tmp
