@@ -1,7 +1,7 @@
 FROM ubuntu:18.04 AS builder
 WORKDIR /project
 RUN apt-get update && \
-    apt-get install -y cmake git vim gcc g++ software-properties-common wget && \
+    apt-get install -y cmake git vim gcc g++ software-properties-common wget gnupg-agent likwid && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

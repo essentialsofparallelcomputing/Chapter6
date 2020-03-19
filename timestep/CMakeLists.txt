@@ -10,12 +10,12 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang") # using Clang
        -march=native -mtune=native -Rpass-analysis=loop-vectorize")
 
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") # using GCC
-   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native"
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -mtune=native\
        -fstrict-aliasing -ftree-vectorize -fopenmp-simd\
        -fopt-info-vec-optimized -fopt-info-vec-missed")
-   if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
+   if ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.9.0")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mprefer-vector-width=512")
-   endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.4.0")
+   endif ("${CMAKE_C_COMPILER_VERSION}" VERSION_GREATER "7.9.0")
 
 elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel") # using Intel C
    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ansi-alias -xHost\
