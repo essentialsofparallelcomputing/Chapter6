@@ -1,39 +1,39 @@
 All: autovec autovec_function timestep mass_sum stencil GlobalSumsVectorized
 
-autovec: autovec/stream_triad
+autovec: autovec/build/stream_triad
 
-autovec/stream_triad:
-	cd autovec; cmake .; make; ./stream_triad
+autovec/build/stream_triad:
+	cd autovec; mkdir build; cd build; cmake ..; make; ./stream_triad
 
-autovec_function: autovec_function/stream_triad
+autovec_function: autovec_function/build/stream_triad
 
-autovec_function/stream_triad:
-	cd autovec_function; cmake .; make; ./stream_triad
+autovec_function/build/stream_triad:
+	cd autovec_function; mkdir build; cd build; cmake ..; make; ./stream_triad
 
-timestep: timestep/timestep
+timestep: timestep/build/timestep
 
-timestep/timestep:
-	cd timestep; cmake .; make; ./timestep; ./timestep_opt; ./timestep_opt1; ./timestep_opt2; ./timestep_opt3
+timestep/build/timestep:
+	cd timestep; mkdir build; cd build; cmake ..; make; ./timestep; ./timestep_opt; ./timestep_opt1; ./timestep_opt2; ./timestep_opt3
 
-mass_sum: mass_sum/mass_sum
+mass_sum: mass_sum/build/mass_sum
 
-mass_sum/mass_sum:
-	cd mass_sum; cmake .; make; ./mass_sum
+mass_sum/build/mass_sum:
+	cd mass_sum; mkdir build; cd build; cmake ..; make; ./mass_sum
 
-#stencil: stencil/stencil
+#stencil: stencil/build/stencil
 #
-#stencil/stencil:
-#	cd stencil; cmake .; make; ./stencil; ./stencil_opt1; ./stencil_opt2
+#stencil/build/stencil:
+#	cd stencil; mkdir build; cd build; cmake ..; make; ./stencil; ./stencil_opt1; ./stencil_opt2
 
-GlobalSumsVectorized: GlobalSumsVectorized/globalsums
+GlobalSumsVectorized: GlobalSumsVectorized/build/globalsums
 
-GlobalSumsVectorized/globalsums:
-	cd GlobalSumsVectorized; cmake .; make; ./globalsums
+GlobalSumsVectorized/build/globalsums:
+	cd GlobalSumsVectorized; mkdir build; cd build; cmake ..; make; ./globalsums
 
 clean:
-	cd autovec; make clean; make distclean
-	cd autovec_function; make clean; make distclean
-	cd timestep; make clean; make distclean
-	cd mass_sum; make clean; make distclean
-	#cd stencil; make clean; make distclean
-	cd GlobalSumsVectorized; make clean; make distclean
+	cd autovec; rm -rf build
+	cd autovec_function; rm -rf build
+	cd timestep; rm -rf build
+	cd mass_sum; rm -rf build
+	#cd stencil; rm -rf build
+	cd GlobalSumsVectorized; rm -rf build

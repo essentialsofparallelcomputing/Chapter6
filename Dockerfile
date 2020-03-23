@@ -1,7 +1,7 @@
 FROM ubuntu:18.04 AS builder
 WORKDIR /project
 RUN apt-get update && \
-    apt-get install -y cmake git vim gcc g++ software-properties-common wget gnupg-agent likwid && \
+    apt-get install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent likwid && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -12,6 +12,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# We are installing both OpenMPI and MPICH. We could use the update-alternatives to switch between them
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90\
                         --slave /usr/bin/g++ g++ /usr/bin/g++-9\
                         --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-9\
@@ -52,5 +53,8 @@ RUN chown -R chapter6:chapter6 /home/chapter6
 USER chapter6
 
 RUN git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter6.git
+
+WORKDIR /home/chapter6/Chapter6
+RUN make
 
 ENTRYPOINT ["bash"]
