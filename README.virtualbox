@@ -29,9 +29,10 @@
 
 # Need script on guest to execute
 # git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter6.git
+# Run the script Chapter6/README.virtualbox
 
 sudo apt-get update && \
-sudo apt-get install -y cmake git vim gcc g++ wget software-properties-common && \
+sudo apt-get install -y cmake git vim gcc g++ gfortran software-properties-common wget gnupg-agent && \
 sudo apt-get clean && \
 sudo rm -rf /var/lib/apt/lists/*
 
@@ -73,3 +74,4 @@ sudo rm -rf /var/lib/apt/lists/*
 source /opt/intel/inteloneapi/setvars.sh
 echo "source /opt/intel/inteloneapi/setvars.sh" >> ${HOME}/.bash_profile
 
+cd Chapter6; #make
