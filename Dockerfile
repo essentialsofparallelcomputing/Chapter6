@@ -55,6 +55,6 @@ USER chapter6
 RUN git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter6.git
 
 WORKDIR /home/chapter6/Chapter6
-RUN make
+#RUN make
 
 ENTRYPOINT ["bash"]
