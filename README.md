@@ -1,5 +1,5 @@
 # Chapter 6 Vectorization: FLOPs for free
-This is from Chapter 6 of the Parallel and High Performance Computing, Robey and Zamora,
+This is from Chapter 6 of Parallel and High Performance Computing, Robey and Zamora,
 Manning Publications, available at http://manning.com
 
 The book may be obtained at
