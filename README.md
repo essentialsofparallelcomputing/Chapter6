@@ -1,9 +1,14 @@
-# Chapter6
+# Chapter 6 Vectorization: FLOPs for free
 This is from Chapter 6 of the Parallel and High Performance Computing, Robey and Zamora,
- Manning Publications, available at http://manning.com
+Manning Publications, available at http://manning.com
 
-Copyright 2019 Robert Robey, Yuliana Zamora, and Manning Publications.
+The book may be obtained at
+   http://www.manning.com/?a_aid=ParallelComputingRobey
+
+Copyright 2019 Robert Robey, Yuliana Zamora, and Manning Publications
 Emails: brobey@earthlink.net, yzamora215@gmail.com
+
+See License.txt for licensing information.
 
 Examining autovectorization
    Requirements: vectorizing compiler such as GCC or Intel

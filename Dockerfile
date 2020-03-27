@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# We are installing both OpenMPI and MPICH. We could use the update-alternatives to switch between them
+# We can use the update-alternatives to switch between compiler versions
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90\
                         --slave /usr/bin/g++ g++ /usr/bin/g++-9\
                         --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-9\
