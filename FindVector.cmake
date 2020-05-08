@@ -125,9 +125,9 @@ if(CMAKE_C_COMPILER_LOADED)
         set(VECTOR_C_VERBOSE "${VECTOR_C_VERBOSE} -Qvec-report:2")
 
     elseif (CMAKE_C_COMPILER_ID MATCHES "XL")
-        set(VECTOR_ALIASING_C_FLAGSS "${VECTOR_ALIASING_C_FLAGS} -qalias=restrict")
-        set(VECTOR_FPMODEL_C_FLAGSS "${VECTOR_FPMODEL_C_FLAGS} -qstrict")
-        set(VECTOR_ARCH_C_FLAGSS "${VECTOR_ARCH_C_FLAGS} -qhot -qarch=auto -qtune=auto")
+        set(VECTOR_ALIASING_C_FLAGS "${VECTOR_ALIASING_C_FLAGS} -qalias=restrict")
+        set(VECTOR_FPMODEL_C_FLAGS "${VECTOR_FPMODEL_C_FLAGS} -qstrict")
+        set(VECTOR_ARCH_C_FLAGS "${VECTOR_ARCH_C_FLAGS} -qhot -qarch=auto -qtune=auto")
 
         set(CMAKE_VEC_C_FLAGS "${CMAKE_VEC_FLAGS} -qsimd=auto")
         set(VECTOR_NOVEC_C_OPT "${VECTOR_NOVEC_C_OPT} -qsimd=noauto")
