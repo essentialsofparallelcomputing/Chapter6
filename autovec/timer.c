@@ -15,4 +15,3 @@ double cpu_timer_stop(struct timespec tstart_cpu)
 
    return(result);
 }
-
