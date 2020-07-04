@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <sys/time.h>
 #include "timer.h"
 
 #define NTIMES 16
