@@ -19,7 +19,7 @@ VBoxManage createmedium --filename "${VM_LOCATION}"/${PROJECT_NAME}/${PROJECT_NA
 
 VBoxManage storagectl ${PROJECT_NAME} --name IDE --add ide
 VBoxManage storageattach ${PROJECT_NAME} --storagectl IDE --port 0 --device 0 --type dvddrive \
-   --medium ${UBUNTU1804_ISO}
+   --medium ${UBUNTU2004_ISO}
 
 VBoxManage storagectl ${PROJECT_NAME} --name SATA --add SATA --controller IntelAhci --hostiocache on
 VBoxManage storageattach ${PROJECT_NAME} --storagectl SATA --port 0 --device 0 --type hdd \
@@ -30,7 +30,7 @@ VBoxManage unattended install ${PROJECT_NAME} \
    --password=${GUEST_USERNAME} \
    --country=US \
    --time-zone=MST \
-   --iso=${UBUNTU1804_ISO} \
+   --iso=${UBUNTU2004_ISO} \
    --install-additions \
    --hostname=${PROJECT_NAME}.virtualbox.org \
    --start-vm=gui
