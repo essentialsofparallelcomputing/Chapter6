@@ -20,10 +20,10 @@ mass_sum: mass_sum/build/mass_sum
 mass_sum/build/mass_sum:
 	cd mass_sum; mkdir build; cd build; cmake ..; make; ./mass_sum
 
-#stencil: stencil/build/stencil
-#
-#stencil/build/stencil:
-#	cd stencil; mkdir build; cd build; cmake ..; make; ./stencil; ./stencil_opt1; ./stencil_opt2
+stencil: stencil/build/stencil
+
+stencil/build/stencil:
+	cd stencil; mkdir build; cd build; cmake ..; make; ./stencil; ./stencil_opt1; ./stencil_opt2
 
 GlobalSumsVectorized: GlobalSumsVectorized/build/globalsums
 
@@ -35,5 +35,5 @@ clean:
 	cd autovec_function; rm -rf build
 	cd timestep; rm -rf build
 	cd mass_sum; rm -rf build
-	#cd stencil; rm -rf build
+	cd stencil; rm -rf build
 	cd GlobalSumsVectorized; rm -rf build
