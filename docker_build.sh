@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t essentialsofparallelcomputing chapter6 .
+docker build -t essentialsofparallelcomputing/chapter6 .
