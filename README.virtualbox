@@ -77,7 +77,7 @@ sudo    rm -rf /var/lib/apt/lists/*
 
 # If Software updater prompts, install updated software --> wait ....
 
-source /opt/intel/inteloneapi/setvars.sh
-echo "source /opt/intel/inteloneapi/setvars.sh" >> ${HOME}/.bash_profile
+source /opt/intel/oneapi/setvars.sh
+echo "source /opt/intel/oneapi/setvars.sh" >> ${HOME}/.bash_profile
 
 cd Chapter6; #make

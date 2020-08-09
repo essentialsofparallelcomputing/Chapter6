@@ -52,9 +52,7 @@ RUN groupadd chapter6 && useradd -m -s /bin/bash -g chapter6 chapter6
 WORKDIR /home/chapter6
 RUN chown -R chapter6:chapter6 /home/chapter6
 USER chapter6
-ENV PATH=${PATH}:/opt/intel/oneapi/advisor/2021.1-beta08/bin64
-ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/intel/oneapi/compiler/2021.1-beta08/linux/compiler/lib/intel64_lin
-ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/intel/oneapi/compiler/2021.1-beta08/linux/lib
+RUN source /opt/intel/oneapi/setvars.sh
 
 RUN git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter6.git
 
