@@ -2,7 +2,8 @@ FROM debian:bullseye
 WORKDIR /project
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
-    apt-get -qq install -y cmake make git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2 likwid
+    apt-get -qq install -y cmake make git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2
+# likwid installed manually in container because msr is not accessible
 
 # Installing latest GCC compiler (version 10) for best vectorization
 RUN apt-get -qq install -y gcc-10 g++-10 gfortran-10
@@ -40,6 +41,11 @@ RUN apt-get -qq update && \
 # Needed libraries for Intel Advisor graphics user interface
 RUN apt-get -qq install -y libgtk2.0-0 libxxf86vm1 libsm6 libnss3 libnss3 libx11-xcb1 libxtst6 \
             libasound2 libatk-bridge2.0-0
+
+RUN wget http://ftp.fau.de/pub/likwid/likwid-5.0.1.tar.gz && tar -xzvf likwid-5.0.1.tar.gz && \
+    cd likwid-5.0.1 && sed -i -e '/ACCESSMODE/s!accessdaemon!perf_event!' \
+       -e '/PREFIX/s!/usr/local!/usr!' -e '/BUILDFREQ/s/true/false/' config.mk && \
+    make && make install && cd .. && rm -rf likwid-5.0.1
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
