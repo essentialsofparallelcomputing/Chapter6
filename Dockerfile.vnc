@@ -1,6 +1,6 @@
 # Part of the examples from the Parallel and High Performance Computing
 # Robey and Zamora, Manning Publications
-#   https://github.com/EssentialsofParallelComputing/Chapterr
+#   https://github.com/EssentialsofParallelComputing/Chapter6
 #
 # Builds a base Docker image for Ubuntu with X Windows and VNC support.
 #
@@ -14,7 +14,7 @@
 # Derived from version at https://hub.docker.com/r/x11vnc/desktop
 # Author: Xiangmin Jiao <xmjiao@gmail.com>
 
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS builder
 LABEL maintainer Bob Robey <brobey@earthlink.net>
 
 ARG DOCKER_LANG=en_US
@@ -112,7 +112,7 @@ RUN apt-get update && \
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
-    apt-get -qq install -y cmake make git vim gcc g++ gfortran software-properties-common wget gnupg-agent && \
+    apt-get -qq install -y cmake make git vim gcc g++ gfortran wget gnupg-agent && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # likwid installed manually in container because msr is not accessible
@@ -172,8 +172,8 @@ RUN update-alternatives --set gcc /usr/bin/gcc-10
 # Customization for user and location
 ########################################################
 # Set up user so that we do not run as root in DOCKER
-ARG DOCKER_USER=chapter6
-ENV DOCKER_UID=9999 \
+ENV DOCKER_USER=chapter6 \
+    DOCKER_UID=9999 \
     DOCKER_GID=9999 \
     DOCKER_SHELL=/bin/zsh
 
@@ -219,5 +219,5 @@ RUN git clone --recursive https://github.com/essentialsofparallelcomputing/Chapt
 ENV DOCKER_CMD=start_vnc
 
 USER root
-ENTRYPOINT ["/sbin/my_init", "--quiet", "--", "/sbin/setuser", "$DOCKER_USER"]
+ENTRYPOINT ["/sbin/my_init", "--quiet", "--", "/sbin/setuser", "chapter6"]
 CMD ["$DOCKER_CMD"]
