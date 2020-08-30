@@ -21,7 +21,8 @@
 int main(int argc, char *argv[])
 {
    LIKWID_MARKER_INIT;
-   // Fails with exit and no message?
+   // Fails with exit and no message if your system permissions do not
+   //    allow the LIKWID daemon to run
    //LIKWID_MARKER_REGISTER("STENCIL");
    struct timespec tstart_cpu, tstop_cpu;
    double cpu_time;
@@ -65,6 +66,10 @@ int main(int argc, char *argv[])
    }
 
    printf("Timing is %f\n",cpu_time);
+
+   free(x);
+   free(xnew);
+   free(flush);
 
    LIKWID_MARKER_CLOSE;
 }

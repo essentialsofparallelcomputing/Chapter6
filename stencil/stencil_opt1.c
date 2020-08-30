@@ -68,5 +68,9 @@ int main(int argc, char *argv[])
 
    printf("Timing is %f\n",cpu_time);
 
+   free(x);
+   free(xnew);
+   free(flush);
+
    LIKWID_MARKER_CLOSE;
 }
