@@ -1,10 +1,10 @@
 # Part of the examples from the Parallel and High Performance Computing
 # Robey and Zamora, Manning Publications
-#   https://github.com/EssentialsofParallelComputing/Chapter3
+#   https://github.com/EssentialsofParallelComputing/Chapter6
 #
 # The built image can be found at:
 #
-#   https://hub.docker.com/r/essentialsofparallelcomputing/chapter3
+#   https://hub.docker.com/r/essentialsofparallelcomputing/chapter6
 #
 # Author:
 # Bob Robey <brobey@earthlink.net>
