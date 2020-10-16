@@ -141,9 +141,9 @@ if(CMAKE_C_COMPILER_LOADED)
 
     elseif (CMAKE_C_COMPILER_ID MATCHES "Cray")
         set(VECTOR_ALIASING_C_FLAGS "${VECTOR_ALIASING_C_FLAGS} -h restrict=a")
-        set(VECTOR_C_OPTS "${VECTOR_C_OPTS} -h vector=3")
+        set(VECTOR_C_OPTS "${VECTOR_C_OPTS} -h vector3")
   
-        set(VECTOR_NOVEC_C_OPT "${VECTOR_NOVEC_C_OPT} -h vector=0")
+        set(VECTOR_NOVEC_C_OPT "${VECTOR_NOVEC_C_OPT} -h vector0")
         set(VECTOR_C_VERBOSE "${VECTOR_C_VERBOSE} -h msgs -h negmsgs -h list=a")
 
     endif()
@@ -264,9 +264,9 @@ if(CMAKE_CXX_COMPILER_LOADED)
 
     elseif (CMAKE_CXX_COMPILER_ID MATCHES "Cray")
         set(VECTOR_ALIASING_CXX_FLAGS "${VECTOR_ALIASING_CXX_FLAGS} -h restrict=a")
-        set(VECTOR_CXX_OPTS "${VECTOR_CXX_OPTS} -h vector=3")
+        set(VECTOR_CXX_OPTS "${VECTOR_CXX_OPTS} -h vector3")
   
-        set(VECTOR_NOVEC_CXX_OPT "${VECTOR_NOVEC_CXX_OPT} -h vector=0")
+        set(VECTOR_NOVEC_CXX_OPT "${VECTOR_NOVEC_CXX_OPT} -h vector0")
         set(VECTOR_CXX_VERBOSE "${VECTOR_CXX_VERBOSE} -h msgs -h negmsgs -h list=a")
 
     endif()
@@ -386,10 +386,9 @@ if(CMAKE_Fortran_COMPILER_LOADED)
         set(VECTOR_Fortran_VERBOSE "${VECTOR_Fortran_VERBOSE} -qreport")
 
     elseif (CMAKE_Fortran_COMPILER_ID MATCHES "Cray")
-        set(VECTOR_ALIASING_Fortran_FLAGS "${VECTOR_ALIASING_Fortran_FLAGS} -h restrict=a")
-        set(VECTOR_Fortran_OPTS "${VECTOR_Fortran_OPTS} -h vector=3")
+        set(VECTOR_Fortran_OPTS "${VECTOR_Fortran_OPTS} -h vector3")
   
-       set(VECTOR_NOVEC_Fortran_OPT "${VECTOR_NOVEC_Fortran_OPT} -h vector=0")
+       set(VECTOR_NOVEC_Fortran_OPT "${VECTOR_NOVEC_Fortran_OPT} -h vector0")
        set(VECTOR_Fortran_VERBOSE "${VECTOR_Fortran_VERBOSE} -h msgs -h negmsgs -h list=a")
 
     endif()
