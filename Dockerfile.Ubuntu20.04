@@ -9,7 +9,7 @@
 # Author:
 # Bob Robey <brobey@earthlink.net>
 
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS builder
 LABEL maintainer Bob Robey <brobey@earthlink.net>
 
 ARG DOCKER_LANG=en_US
@@ -32,7 +32,8 @@ ENV LC_ALL=$DOCKER_LANG.UTF-8
 
 RUN apt-get -qq update && \
     DEBIAN_FRONTEND=noninteractive \
-    apt-get -qq install -y cmake make git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2 && \
+    apt-get -qq install -y cmake make git vim gcc g++ gfortran software-properties-common wget gnupg-agent gnupg2 \
+    xterm x11-apps && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # likwid installed manually in container because msr is not accessible
@@ -81,7 +82,7 @@ RUN apt-get -qq update && \
 # Changing config to install in /usr and to use perf events instead of access daemons to 
 # try and get around permission limitations in a Docker container
 RUN update-alternatives --set gcc /usr/bin/gcc-9
-RUN wget http://ftp.fau.de/pub/likwid/likwid-5.0.1.tar.gz && tar -xzf likwid-5.0.1.tar.gz && \
+RUN wget --no-verbose http://ftp.fau.de/pub/likwid/likwid-5.0.1.tar.gz && tar -xzf likwid-5.0.1.tar.gz && \
     cd likwid-5.0.1 && sed -i -e '/ACCESSMODE/s!accessdaemon!perf_event!' \
        -e '/PREFIX/s!/usr/local!/usr!' -e '/BUILDFREQ/s/true/false/' config.mk && \
     make && make install && cd .. && rm -rf likwid-5.0.1
@@ -92,9 +93,16 @@ SHELL ["/bin/bash", "-c"]
 
 RUN groupadd chapter6 && useradd -m -s /bin/bash -g chapter6 chapter6
 
+RUN usermod -a -G video chapter6
+
 WORKDIR /home/chapter6
 RUN chown -R chapter6:chapter6 /home/chapter6
 USER chapter6
+
+ENV LANG='en_US.UTF-8'
+ENV DISPLAY :0
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES display,graphics,utility
 RUN source /opt/intel/oneapi/setvars.sh
 
 RUN git clone --recursive https://github.com/essentialsofparallelcomputing/Chapter6.git
